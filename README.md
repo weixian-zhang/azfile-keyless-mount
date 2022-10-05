@@ -8,4 +8,6 @@
 * AKM also spins off a background worker to constantly monitor the mapped network drive, if drive is found missing due to VM restarts or transient network fault,
 drive is automatically remapped. This check happens every 3 seconds.  
 
+AKM executable and config.yaml can be found in [./deploy](https://github.com/weixian-zhang/azfile-keyless-mount/tree/main/deploy) folder.  
+
 AKM can be [added as Windows Startup program](https://shellgeek.com/startup-folder-path-in-windows-server/) to cover VM restart scenario.
