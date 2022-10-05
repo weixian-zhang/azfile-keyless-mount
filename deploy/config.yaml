@@ -1,0 +1,9 @@
+
+
+networkDriveLetter: U
+azStorageName: strgazfilemountkeyless
+azFileShareName: app-fileshare
+akvName: akv-keyless-mount
+akvStorageKeySecretName: azfile-mount-storage-key
+lawWorkspaceId: null                      #optional
+akvLAWKeySecretName: null          #optional

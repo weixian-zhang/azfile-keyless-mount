@@ -1,0 +1,36 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/AzFileKeylessMount.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish single self-contained .exe",
+            "type": "shell",
+            "command": "dotnet publish AzFileKeylessMount.csproj -c Release -o ../deploy -p:PublishSingleFile=true --self-contained true -p:PublishReadyToRun=true",
+            "dependsOn": [
+                "copy config.yaml"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/src/"
+            }
+        },
+        {
+            "label": "copy config.yaml",
+            "type": "shell",
+            "command" : "Copy-Item",
+            "args": ["-Path", "${workspaceFolder}/src/config.yaml", "-Destination", "${workspaceFolder}/deploy/"]
+
+        }
+
+    ]
+}
