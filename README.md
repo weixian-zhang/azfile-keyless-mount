@@ -14,7 +14,7 @@ drive is automatically remapped. This check happens every 3 seconds.
 
 ### Deployment  
 
-* AKM .exe and config.yaml can be found in [./deploy](https://github.com/weixian-zhang/azfile-keyless-mount/tree/main/deploy).  
+* AzFileKeylessMount.exe and config.yaml can be found in [./deploy](https://github.com/weixian-zhang/azfile-keyless-mount/tree/main/deploy).  
 AzFileKeylessMount.exe file is bundled as self-contained so it does not require DotNet framework to be installed.  
 Once the console window is configured to be hidden, running [AzFileKeylessMount.exe](https://github.com/weixian-zhang/azfile-keyless-mount/blob/main/deploy/AzFileKeylessMount.exe) makes AKM run like a background app
 
