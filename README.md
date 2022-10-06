@@ -8,6 +8,10 @@
 * AKM spins off a background worker to constantly monitor the mapped network drive, if drive is found missing due to VM restarts or transient network fault,
 drive is automatically remapped. This check happens every 3 seconds.  
 
+* Console window can be hidden to simulate running as background or as a "Window Service"
+
+* option to send logs to Log Analytics workspace
+
 AKM .exe and config.yaml can be found in [./deploy](https://github.com/weixian-zhang/azfile-keyless-mount/tree/main/deploy) folder.  
 .exe file is bundled as self-contained and does not require DotNet framework to be installed.  
 
