@@ -18,5 +18,6 @@ drive is automatically remapped. This check happens every 3 seconds.
 AzFileKeylessMount.exe file is bundled as self-contained so it does not require DotNet framework to be installed.  
 Once the console window is configured to be hidden, running [AzFileKeylessMount.exe](https://github.com/weixian-zhang/azfile-keyless-mount/blob/main/deploy/AzFileKeylessMount.exe) makes AKM run like a background app
 
-* AKM can be [added as Windows Startup program](https://shellgeek.com/startup-folder-path-in-windows-server/) to cover VM restart scenario.
-* For newly created VMs, another option of deployment is to install AKM using [Custom Script Extension](https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-windows)
+* AKM can be [added as Windows Startup program](https://shellgeek.com/startup-folder-path-in-windows-server/) to cover VM restart scenario.  
+* 
+* <b>Not tested</b>: when creating "new" VMs, another option is to leverage [Custom Script Extension](https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-windows) to deploy AKM
