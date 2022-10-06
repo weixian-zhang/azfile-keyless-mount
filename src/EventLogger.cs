@@ -6,6 +6,8 @@ public interface IEventLogger
     void Info(string message);
     void Error(Exception ex);
     void Error(string error);
+
+    void SetLogToLAW(string workspaceId, string workspaceKey, string LawTableName);
 }
 
 public class EventLogger : IEventLogger
@@ -22,21 +24,7 @@ public class EventLogger : IEventLogger
             .WriteTo.Console()
             .WriteTo.File(_logFilePath);
 
-        _logger = loggerConfigWithoutLaw.CreateLogger();
-
-        //_akv = akv;
-
-        // if(ShouldLogToLAW())
-        // {
-        //     string lawKey = _akv.GetSecret(_appconfig.AkvLAWKeySecretUri);
-
-        //      = new LoggerConfiguration()
-        //     .WriteTo.Console()
-        //     .WriteTo.File(_logFilePath)
-        //     .WriteTo.AzureLogAnalytics(_appconfig.LogAnalyticsWorkspaceId, lawKey)
-        //     .CreateLogger();
-        // }
-        // else        
+        _logger = loggerConfigWithoutLaw.CreateLogger();     
     }
 
     public void Error(Exception ex)
@@ -54,19 +42,24 @@ public class EventLogger : IEventLogger
         _logger.Information(message);
     }
 
-    public void SetLogToLAW(string workspaceId, string workspaceKey)
+    public void SetLogToLAW(string workspaceId, string workspaceKey, string LawTableName)
     {
+        if(!ShouldLogToLAW(workspaceId, workspaceKey, LawTableName))
+            return;
+
         var loggerConfigWithoutLaw = new LoggerConfiguration()
             .WriteTo.Console()
-            .WriteTo.AzureAnalytics(workspaceId, workspaceKey)
+            .WriteTo.AzureAnalytics(workspaceId, workspaceKey, LawTableName)
             .WriteTo.File(_logFilePath);
 
         _logger = loggerConfigWithoutLaw.CreateLogger();
     }
 
-    private bool ShouldLogToLAW(string workspaceId, string workspaceKey)
+    private bool ShouldLogToLAW(string workspaceId, string workspaceKey, string LawTableName)
     {
-        if (!string.IsNullOrEmpty(workspaceId) && !string.IsNullOrEmpty(workspaceKey))
+        if (!string.IsNullOrEmpty(workspaceId) && 
+            !string.IsNullOrEmpty(workspaceKey) && 
+            !string.IsNullOrEmpty(LawTableName))
             return true;
         
         return false;

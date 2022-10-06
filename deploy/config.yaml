@@ -1,9 +1,11 @@
 
 
 networkDriveLetter: U
-azStorageName: strgazfilemountkeyless
+azStorageName:  strgazfilemountkeyless
 azFileShareName: app-fileshare
 akvName: akv-keyless-mount
 akvStorageKeySecretName: azfile-mount-storage-key
-lawWorkspaceId: null                      #optional
-akvLAWKeySecretName: null          #optional
+lawWorkspaceId: 4cec2-c069-488a-b3a1-df168bf  #optional - will not log to LAW if missing
+akvLAWKeySecretName: azfile-mount-lawkey              #optional - will not log to LAW if missing
+lawTableName: AzFileKM                                #optional - will not log to LAW if missing.In LAW, named as AzFileKM_CL custom table
+hideConsoleWindow: False

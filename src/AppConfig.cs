@@ -7,7 +7,7 @@ public class AppConfig
 {
     private static string _configFilePath = "config.yaml";
 
-    public string NetworkDriveLetter { get; set; } = "";
+    public string NetworkDriveLetter { get; set; }
 
     public string AzStorageName { get; set; } = "";
 
@@ -21,6 +21,10 @@ public class AppConfig
 
     public string AkvLAWKeySecretName { get; set; } = "";
 
+    public string LawTableName { get; set; } = "";
+
+    public bool HideConsoleWindow { get; set; } = false;
+
     //internal usage
     public string NetworkDriveUNCPath { get; set; } = "";
 
@@ -30,7 +34,9 @@ public class AppConfig
 
     public static AppConfig Create()
     {
-        string yamlText = File.ReadAllText(_configFilePath);
+        string startupPath = AppDomain.CurrentDomain.BaseDirectory;
+
+        string yamlText = File.ReadAllText(Path.Combine(startupPath, _configFilePath));
 
         var deserializer = new DeserializerBuilder()
         .WithNamingConvention(new CamelCaseNamingConvention())  // camel casing by default
@@ -39,6 +45,7 @@ public class AppConfig
         var appconfig = deserializer.Deserialize<AppConfig>(yamlText);
 
         appconfig.NetworkDriveUNCPath = @$"\\{appconfig.AzStorageName}.file.core.windows.net\{appconfig.AzFileShareName}";
+        
 
         return appconfig;
     }

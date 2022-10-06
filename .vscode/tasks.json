@@ -3,20 +3,24 @@
     "tasks": [
         {
             "label": "build",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/src/AzFileKeylessMount.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
+            "type": "shell",
+            "command": "dotnet build",
+            "dependsOn": ["copy config.yaml on debug"],
+            "options": {
+                "cwd": "${workspaceFolder}/src/"
+            }
+        },
+        {
+            "label": "copy config.yaml on debug",
+            "type": "shell",
+            "command" : "Copy-Item",
+            "args": ["-Path", "${workspaceFolder}/src/config.yaml", "-Destination", "${workspaceFolder}/src/bin/debug/net6.0"]
+
         },
         {
             "label": "publish single self-contained .exe",
             "type": "shell",
-            "command": "dotnet publish AzFileKeylessMount.csproj -c Release -o ../deploy -p:PublishSingleFile=true --self-contained true -p:PublishReadyToRun=true",
+            "command": "dotnet publish AzFileKeylessMount.csproj -c Release -o ../deploy -p:PublishSingleFile=true -p:RuntimeIdentifier=win-x64 --self-contained true -p:PublishReadyToRun=true",
             "dependsOn": [
                 "copy config.yaml"
             ],

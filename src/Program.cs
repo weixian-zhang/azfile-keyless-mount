@@ -15,6 +15,15 @@ partial class Program {
 
         AppConfig appconfig = AppConfig.Create();
 
+        if(!IsConfigInputIsValid(appconfig))
+        {
+            _logger.Error($"AppConfig error: Drive Letter {appconfig.NetworkDriveLetter} or UNC Path is invalid {appconfig.NetworkDriveUNCPath}");
+            Environment.Exit(0);
+        }
+
+        if(appconfig.HideConsoleWindow)
+            ConsoleWindowHider.HideWindow();
+
         _logger.Info("config.yaml loaded");
 
         var akv = new AzKeyVault(appconfig.AkvName, _logger);
@@ -24,6 +33,9 @@ partial class Program {
         appconfig.InitSecrets(akv);
 
         _logger.Info("initialize secrets completed");
+
+        //init logger to also send logs to Log Analytics
+        _logger.SetLogToLAW(appconfig.LawWorkspaceId, appconfig.LAWKey, appconfig.LawTableName);
 
         var cmdRunner = new CmdRunner(appconfig, _logger);
 
@@ -45,9 +57,24 @@ partial class Program {
         _logger.Error(e.ExceptionObject.ToString());
         Environment.Exit(0);
     }
-}
 
-// See https://aka.ms/new-console-template for more information
+        // prevent command injection
+    private static bool IsConfigInputIsValid(AppConfig appconfig)
+    {
+        char c;
+        bool OK = Char.TryParse(appconfig.NetworkDriveLetter, out c);
+
+        if(OK && IsUncPath(appconfig.NetworkDriveUNCPath))
+            return true;
+        return false;
+    }
+
+    public static bool IsUncPath(string path)
+    {
+        bool OK = Uri.TryCreate(path, UriKind.Absolute, out Uri uri) && uri.IsUnc;
+        return OK;
+    }
+}
 
 
 
