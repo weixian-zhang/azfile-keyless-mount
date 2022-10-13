@@ -16,7 +16,7 @@ public class CmdRunner
     {
         _logger.Info($"mapping network drive");
 
-        string cmd = $"/C net use {_appconfig.NetworkDriveLetter}: {_appconfig.NetworkDriveUNCPath} {_appconfig.StorageKey} /user:localhost\\{_appconfig.AzStorageName} /persistent:yes";
+        string cmd = $"/C net use {_appconfig.NetworkDriveLetter}: {_appconfig.NetworkDriveUNCPath} {_appconfig.StorageKey} /user:localhost\\{_appconfig.AzStorageName}";
 
         var process = CreateProcess(cmd);
 
